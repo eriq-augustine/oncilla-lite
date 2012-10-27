@@ -1,5 +1,7 @@
 define(['underscore', 'unit_constants', 'mixins/renderable'],
-       function(_, unitConstants, Renderable) {
+       function(_, unitConstants, Renderable, template) {
+
+
    var Object = function(attributes) {
       this.type = attributes.type;
 
