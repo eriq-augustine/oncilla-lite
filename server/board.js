@@ -16,7 +16,7 @@ exports.TestBoard = function() {
 exports.SuperTestBoard = function() {
    var units, terrain, rows, cols, map, tile;
 
-   units = ['berserker', 'terror-bird'];
+   units = ['berserker', 'terrorBird'];
    terrain = ['grass', 'mountains'];
 
    rows = 10;
@@ -29,11 +29,11 @@ exports.SuperTestBoard = function() {
          tile = {};
          unitChance = Math.floor(Math.random() * 10);
          if (unitChance <= 1) {
-            tile.unit = { klass: units[unitChance] };
+            tile.unit = { type: units[unitChance] };
          }
 
          tile.terrain = {
-            klass: terrain[Math.floor(Math.random() * terrain.length)]
+            type: terrain[Math.floor(Math.random() * terrain.length)]
          };
 
          map[i][j] = tile;

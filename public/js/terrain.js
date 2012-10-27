@@ -1,9 +1,11 @@
-define(['underscore', 'mixins/renderable'], function(_, Renderable) {
+define(['underscore', 'mixins/renderable', 'terrain_constants'],
+       function(_, Renderable, terrainConstants) {
    var Object = function(attributes) {
-      this.klass = attributes.klass || 'default';
+      this.type = attributes.type;
+      _.extend(this, attributes, terrainConstants[this.type]);
    };
 
-   _.extend(Object.prototype, Renderable('terrain'));
+   _.extend(Object.prototype, Renderable({ baseClass: 'terrain' }));
 
    return Object;
 });
