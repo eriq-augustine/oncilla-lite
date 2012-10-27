@@ -43,3 +43,7 @@
 .terror-bird {
    background-image: url(../assets/units/Terrorbird.gif);
 }
+
+.selected {
+   border: 2px solid red;
+}

@@ -1,4 +1,4 @@
-define(['underscore'], function(_) {
+define(['underscore', 'board_constants'], function(_, board_consts) {
    var Board;
 
    Board = function(kwargs) {
@@ -7,41 +7,7 @@ define(['underscore'], function(_) {
 
       this.selectedUnit = null;
       this.locationHighlights = [];
-
-      document.getElementById('game_board').onclick = function(event) {
-         var row = event.target.dataset.x;
-         var col = event.target.dataset.y;
-
-         locationHigilights.forEach(function(position) {
-            position.selected = false;
-            position.render(row, col);
-         });
-
-         if (selectedUnit) {
-            if (map[row][col].unit) {
-               // TODO(eriq): Attack
-            } else {
-               if (Math.abs(row - selectedUnit.row) + Math.abs(col - selectedUnit.col) <= selectedUnit.unit.movePoints) {
-                  map[row][col].unit = selectedUnit.unit;
-                  map[row][col].render();
-
-                  map[selectedUnit.row][selectedUnit.col].unit = null;
-                  map[selectedUnit.row][selectedUnit.col].render();
-               }
-            }
-
-            selectedUnit = null;
-         } else {
-            if (map[row][col].unit) {
-               locationHighlights = findReachableLocations(row, col, map, map[row][col].unit.movePoints);
-               locationHigilights.forEach(function(position) {
-                  position.selected = true;
-                  position.render(row, col);
-               });
-               selectedUnit = {row: row, col: col, unit: map[row][col].unit};
-            }
-         }
-      };
+      document.getElementById('game_board').onclick = this.doOnClick.bind(this);
    };
 
    _.extend(Board.prototype, {
@@ -50,7 +16,58 @@ define(['underscore'], function(_) {
       },
       render: function() {
       },
-      renderTile: function(x, y) {
+      renderTile: function(row, col) {
+         tile = this.map[row][col];
+         ele = document.getElementById('tile-' + row + '-' + col);
+         ele.innerHTML = '';
+
+         console.log("render: " + row + ", " + col);
+
+         if (tile.selected) {
+            ele.className = board_consts.TILE_CLASS + ' selected';
+         } else {
+            ele.className = board_consts.TILE_CLASS;
+         }
+
+         if (tile.unit) {
+            ele.appendChild(tile.unit.render());
+         }
+
+         ele.appendChild(tile.terrain.render());
+      },
+      doOnClick: function(event) {
+         var row = Math.floor(event.y / board_consts.TILE_DIM);
+         var col = Math.floor(event.x / board_consts.TILE_DIM);
+
+         this.locationHighlights.forEach(function(position) {
+            this.map[position.row][position.col].selected = false;
+            this.renderTile(position.row, position.col);
+         }, this);
+
+         if (this.selectedUnit) {
+            if (this.map[row][col].unit) {
+               // TODO(eriq): Attack
+            } else {
+               if (Math.abs(row - this.selectedUnit.row) + Math.abs(col - this.selectedUnit.col) <= this.selectedUnit.unit.movePoints) {
+                  this.map[row][col].unit = this.selectedUnit.unit;
+                  this.renderTile(row, col);
+
+                  this.map[this.selectedUnit.row][this.selectedUnit.col].unit = null;
+                  this.renderTile(this.selectedUnit.row, this.selectedUnit.col);
+               }
+            }
+
+            this.selectedUnit = null;
+         } else {
+            if (this.map[row][col].unit) {
+               this.locationHighlights = findReachableLocations(row, col, this.map, this.map[row][col].unit.movePoints);
+               this.locationHighlights.forEach(function(position) {
+                  this.map[position.row][position.col].selected = true;
+                  this.renderTile(position.row, position.col);
+               }, this);
+               this.selectedUnit = {row: row, col: col, unit: this.map[row][col].unit};
+            }
+         }
       }
    });
 
@@ -65,7 +82,7 @@ define(['underscore'], function(_) {
       for (var i = startRow; i < endRow; i++) {
          for (var j = startCol; j < endCol; j++) {
             if (Math.abs(i - row) + Math.abs(j - col) <= move) {
-               reachables.push(map[i][j]);
+               reachables.push({row: i, col: j});
             }
          }
       }
