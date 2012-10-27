@@ -1,6 +1,7 @@
-define(['underscore'], function(_) {
+define(['underscore', 'constants'], function(_, constants) {
    var port = 9090;
 
+   console.log(constants.MY_CONSTANT);
    var Game = function() {
       this.connection = new WebSocket('ws://127.0.0.1:' + port);
       this.connection.onopen = _.bind(this.onOpen, this);
