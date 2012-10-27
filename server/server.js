@@ -28,6 +28,7 @@ socketServer.on('request', function(request) {
    });
 
    // Init the board right away.
-   var message = {'type': 'init_board', 'board': new board.TestBoard()};
+   //var message = {'type': 'init_board', 'board': new board.TestBoard()};
+   var message = {'type': 'init_board', 'board': board.SuperTestBoard()};
    connection.send(JSON.stringify(message));
 });
