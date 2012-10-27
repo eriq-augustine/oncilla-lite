@@ -1,31 +1,25 @@
 define(['board_constants'], function(board_consts) {
    return function(board_props) {
-      var board = '', tile_id = 'tile_';
+      var board = '';
 
-      for (var dim_x = 0; dim_x < board_props.rows; dim_x++) {
-         var x_pos = dim_x * board_consts.TILE_DIM;
-         tile_id += dim_x + '_';
+      for (var dimX = 0; dimX < board_props.rows; dimX++) {
+         var xPos = dimX * board_consts.TILE_DIM;
 
-         for (var dim_y = 0; dim_y < board_props.cols; dim_y++) {
-            var y_pos = dim_y * board_consts.TILE_DIM;
-            var tile_class = board_consts.TILE_CLASS + ' ' +
-                             board_props.map[dim_x][dim_y];
+         for (var dimY = 0; dimY < board_props.cols; dimY++) {
+            var yPos = dimY * board_consts.TILE_DIM;
+            var tileClass = board_consts.TILE_CLASS + ' ' +
+                            board_props.map[dimX][dimY];
 
-            tile_id = 'tile_' + dim_x + '_' + dim_y;
+            var tileComponent = '<div class="' + tileClass + '" ' +
+                                'data-x="' + dimX + '" ' +
+                                'data-y="' + dimY + '" ' +
+                                'style="position: absolute; top: ' +
+                                xPos + 'px; left: ' + yPos + 'px;"></div>';
 
-            var tile_component = '<div class="' + tile_class + '" ' +
-                                 'data-x="' + dim_x + '" ' +
-                                 'data-y="' + dim_y + '" ' +
-                                 'id="' + tile_id + '" ' +
-                                 'style="position: absolute; top: ' +
-                                 x_pos + 'px; left: ' + y_pos + 'px;"' +
-                                 '></div>';
-
-            board += tile_component;
+            board += tileComponent;
          }
       }
 
-      console.log(board);
       document.getElementById(board_consts.BOARD_COMPONENT).innerHTML = board;
    }
 });
