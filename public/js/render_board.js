@@ -4,7 +4,6 @@ define(['jquery', 'board_constants'], function($, board_consts) {
       $board = $('<div>');
       tileClass = board_consts.TILE_CLASS;
 
-
       for (var dimX = 0; dimX < board_map.length; dimX++) {
          x = dimX * board_consts.TILE_DIM;
 
