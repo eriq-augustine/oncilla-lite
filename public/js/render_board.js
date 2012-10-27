@@ -1,6 +1,6 @@
 define(['board_constants'], function(board_consts) {
    return function(board_map) {
-      var boardHTML = '<div></div>';
+      var boardHTML = document.createElement('div');
 
       console.log(board_map);
 
@@ -25,28 +25,26 @@ define(['board_constants'], function(board_consts) {
 
             var tileClass = board_consts.TILE_CLASS;
 
-            var tileComponent = '<div> ' +
-                                'class="' + tileClass + '" ' +
-                                'data-x="' + dimX + '" ' +
-                                'data-y="' + dimY + '" ' +
-                                'style="position: absolute; ' +
-                                       'top: ' + xPos + 'px; ' +
-                                       'left: ' + yPos + 'px;">' +
-                                '</div>';
-            var boardComponent = document.createElement(tileComponent);
+            var tileComponent = document.createElement('div');
+            tileComponent.className = tileClass;
+            tileComponent.style.position = 'absolute';
+            tileComponent.style.top = xPos + 'px';
+            tileComponent.style.left = yPos + 'px';
+
             /*
             if (unitObj) {
                boardComponent.appendChild(unitObj);
             }
             */
 
-            boardComponent.appendChild(terrainObj);
+            tileComponent.appendChild(terrainObj);
 
-            boardHTML.appendChild(boardComponent);
+            boardHTML.appendChild(tileComponent);
          }
       }
 
       //document.getElementById(board_consts.BOARD_COMPONENT).innerHTML = boardHTML;
       document.getElementById(board_consts.BOARD_COMPONENT).appendChild(boardHTML);
+      console.log(boardHTML);
    }
 });
