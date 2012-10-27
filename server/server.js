@@ -1,13 +1,13 @@
 var port = 9090
 
+var connect = require('connect');
 var WebSocketServer = require('websocket').server;
 var http = require('http');
+var fs = require('fs');
 
-var server = http.createServer(function(request, response) {
-   // Don't need to handle HTTP requests.
-});
-
-server.listen(port, function() {});
+var server = connect.createServer(
+   connect.static(__dirname + '/../client')
+).listen(9090);
 
 socketServer = new WebSocketServer({httpServer: server});
 
