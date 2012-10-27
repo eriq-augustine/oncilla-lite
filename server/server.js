@@ -15,7 +15,7 @@ socketServer.on('request', function(request) {
    var connection = request.accept(null, request.origin);
 
    connection.on('open', function() {
-      connection.send(
+      //connection.send(
    });
 
    connection.on('error', function(error) {
