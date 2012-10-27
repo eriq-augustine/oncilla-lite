@@ -2,6 +2,7 @@ define(['board_constants'], function(board_consts) {
    return function(board_props) {
       var board = '';
 
+      console.log(board_props);
       for (var dimX = 0; dimX < board_props.rows; dimX++) {
          var xPos = dimX * board_consts.TILE_DIM;
 
