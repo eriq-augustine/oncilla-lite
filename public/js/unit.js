@@ -1,11 +1,13 @@
-define(['underscore', 'mixins/renderable'], function(_, Renderable) {
+define(['underscore', 'unit_constants', 'mixins/renderable'],
+       function(_, unitConstants, Renderable) {
    var Object = function(attributes) {
-      attributes = attributes || {};
-      this.klass = attributes.klass || 'default';
-      this.movePoints = attributes.movePoints || 5;
+      this.type = attributes.type;
+
+      _.extend(this, attributes, unitConstants[this.type]);
+      console.log(this);
    };
 
-   _.extend(Object.prototype, Renderable('unit'));
+   _.extend(Object.prototype, Renderable({ baseClass: 'unit' }));
 
    return Object;
 });

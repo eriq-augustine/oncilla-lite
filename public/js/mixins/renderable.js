@@ -1,11 +1,10 @@
 define(function() {
-   return function(baseClass) {
-      console.log(baseClass);
+   return function(options) {
       return {
          render: function() {
-            var klass = this.klass || 'default',
+            var className = this.className || 'default',
                 el = document.createElement('div');
-            el.className = baseClass + ' ' + this.klass;
+            el.className = options.baseClass + ' ' + this.className;
             return el;
          }
       }
