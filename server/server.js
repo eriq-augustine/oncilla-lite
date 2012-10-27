@@ -6,7 +6,7 @@ var http = require('http');
 var fs = require('fs');
 
 var server = connect.createServer(
-   connect.static(__dirname + '/../client')
+   connect.static(__dirname + '/../public')
 ).listen(9090);
 
 var socketServer = new WebSocketServer({httpServer: server});
