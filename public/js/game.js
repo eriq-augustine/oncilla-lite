@@ -1,5 +1,5 @@
-define(['underscore', 'board', 'render_board', 'unit', 'terrain'],
-       function(_, Board, render, Unit, Terrain) {
+define(['underscore', 'board', 'unit', 'terrain'],
+       function(_, Board, Unit, Terrain) {
 
    var port = 9090;
 
@@ -40,7 +40,7 @@ define(['underscore', 'board', 'render_board', 'unit', 'terrain'],
          if (json.type == "init_board") {
             console.log('trying to render...');
             this.board.setMap({ map: parseBoard(json.board) });
-            this.render();
+            this.board.render();
          }
       },
 
