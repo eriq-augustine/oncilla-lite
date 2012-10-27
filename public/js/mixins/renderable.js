@@ -1,17 +1,19 @@
-define(function() {
+define(['jquery'], function($) {
    return function(options) {
+
       return {
          render: function() {
-            var className = this.className || 'default',
-                el = document.createElement('div');
-            el.className = options.baseClass + ' ' + this.className;
+            var el = $('<div class="' +
+                       options.baseClass + ' ' + this.className +
+                       '">');
 
             if (this.health) {
-               el.innerHTML = this.health;
+               el.text = this.health;
             }
 
-            return el;
+            return el[0];
          }
       }
+
    }
 });

@@ -1,46 +1,35 @@
-define(['board_constants'], function(board_consts) {
+define(['jquery', 'board_constants'], function($, board_consts) {
    return function(board_map) {
-      var boardHTML = document.createElement('div');
+      var $unit, $terrain, $tile, $board, tile, tileClass, x, y;
+      $board = $('<div>');
+      tileClass = board_consts.TILE_CLASS;
 
-      console.log(board_map);
 
       for (var dimX = 0; dimX < board_map.length; dimX++) {
-         var xPos = dimX * board_consts.TILE_DIM;
-
-         console.log(dimX);
+         x = dimX * board_consts.TILE_DIM;
 
          for (var dimY = 0; dimY < board_map[dimX].length; dimY++) {
-            var yPos = dimY * board_consts.TILE_DIM;
+            y = dimY * board_consts.TILE_DIM;
 
-            var tileObj = board_map[dimX][dimY];
+            tile = board_map[dimX][dimY];
+            $terrain = tile.terrain.render();
+            if (tile.unit)
+               $unit = tile.unit.render();
 
-            var unitObj = undefined;
-            var terrainObj = tileObj.terrain.render();
+            $tile = $('<div>')
+               .addClass(tileClass)
+               .css('position', 'absolute')
+               .css('top', x + 'px')
+               .css('left', y + 'px');
 
-            if (tileObj.unit) {
-               unitObj = tileObj.unit.render();
-            }
+            $tile.append($terrain);
+            if ($unit)
+               $tile.append($unit);
 
-            var tileClass = board_consts.TILE_CLASS;
-
-            var tileComponent = document.createElement('div');
-            tileComponent.className = tileClass;
-            tileComponent.style.position = 'absolute';
-            tileComponent.style.top = xPos + 'px';
-            tileComponent.style.left = yPos + 'px';
-
-            if (unitObj) {
-               tileComponent.appendChild(unitObj);
-            }
-
-            tileComponent.appendChild(terrainObj);
-
-            boardHTML.appendChild(tileComponent);
+            $board.append($tile);
          }
       }
 
-      //document.getElementById(board_consts.BOARD_COMPONENT).innerHTML = boardHTML;
-      document.getElementById(board_consts.BOARD_COMPONENT).appendChild(boardHTML);
-      console.log(boardHTML);
+      $('#' + board_consts.BOARD_COMPONENT).append($board);
    }
 });
