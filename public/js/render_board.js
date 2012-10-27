@@ -15,6 +15,8 @@ define(['jquery', 'board_constants'], function($, board_consts) {
             $terrain = tile.terrain.render();
             if (tile.unit)
                $unit = tile.unit.render();
+            else
+               $unit = undefined;
 
             $tile = $('<div>')
                .addClass(tileClass)
@@ -22,9 +24,9 @@ define(['jquery', 'board_constants'], function($, board_consts) {
                .css('top', x + 'px')
                .css('left', y + 'px');
 
-            $tile.append($terrain);
             if ($unit)
                $tile.append($unit);
+            $tile.append($terrain);
 
             $board.append($tile);
          }
