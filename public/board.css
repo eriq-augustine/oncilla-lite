@@ -10,3 +10,15 @@
 .board_tile:nth-child(even) {
    background-color: green;
 }
+
+.red {
+   background-color: red;
+}
+
+.blue {
+   background-color: blue;
+}
+
+.green {
+   background-color: green;
+}
