@@ -4,6 +4,9 @@ define(['underscore', 'unit_constants', 'mixins/renderable'],
       this.type = attributes.type;
 
       _.extend(this, attributes, unitConstants[this.type]);
+
+      this.health = attributes.health || this.maxHealth;
+      this.movePoints = attributes.movePoints || this.maxMovePoints;
       console.log(this);
    };
 
