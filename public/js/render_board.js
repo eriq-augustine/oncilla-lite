@@ -1,4 +1,5 @@
 define(['jquery', 'board_constants'], function($, board_consts) {
+
    return function(board_map) {
       var $unit, $terrain, $tile, $board, tile, tileClass, x, y;
       $board = $('<div>');
@@ -19,6 +20,7 @@ define(['jquery', 'board_constants'], function($, board_consts) {
 
             $tile = $('<div>')
                .addClass(tileClass)
+               .attr('id', 'tile-' + dimX + '-' + dimY)
                .css('position', 'absolute')
                .css('top', x + 'px')
                .css('left', y + 'px');
