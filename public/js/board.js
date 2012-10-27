@@ -14,6 +14,7 @@ define(['underscore', 'board_constants'], function(_, boardConstants) {
       setMap: function(bundle) {
          this.map = bundle.map;
       },
+
       render: function() {
          var $unit, $terrain, $tile, $board,
              rows, cols, tile, tileClass, x, y;
@@ -40,17 +41,28 @@ define(['underscore', 'board_constants'], function(_, boardConstants) {
          y = col * boardConstants.TILE_DIM;
 
          tile = this.map[row][col];
+         $tile = $('#tile-' + row + '-' + col);
          $terrain = tile.terrain.render();
 
          if (tile.unit)
             $unit = tile.unit.render();
 
-         $tile = $('<div>')
-            .addClass(boardConstants.TILE_CLASS)
-            .attr('id', 'tile-' + row + '-' + col)
-            .css('position', 'absolute')
-            .css('top', x + 'px')
-            .css('left', y + 'px');
+         if ($tile.length) {
+            $tile.empty();
+         }
+         else {
+            $tile = $('<div>')
+               .addClass(boardConstants.TILE_CLASS)
+               .attr('id', 'tile-' + row + '-' + col)
+               .css('position', 'absolute')
+               .css('top', x + 'px')
+               .css('left', y + 'px');
+         }
+
+         if (tile.selected)
+            $tile.addClass('selected');
+         else
+            $tile.removeClass('selected');
 
          if ($unit)
             $tile.append($unit);
