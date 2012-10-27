@@ -5,7 +5,7 @@ define(['underscore', 'mixins/renderable'], function(_, Renderable) {
       this.movePoints = attributes.movePoints || 5;
    };
 
-   _.extend(Object.prototype, Renderable('unit'));
+   _.extend(Object.prototype, Renderable({ baseClass: 'unit' }));
 
    return Object;
 });

@@ -3,7 +3,7 @@ define(['underscore', 'mixins/renderable'], function(_, Renderable) {
       this.klass = attributes.klass || 'default';
    };
 
-   _.extend(Object.prototype, Renderable('terrain'));
+   _.extend(Object.prototype, Renderable({ baseClass: 'terrain' }));
 
    return Object;
 });
