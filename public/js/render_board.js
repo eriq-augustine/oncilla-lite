@@ -24,6 +24,6 @@ define(['board_constants'], function(board_consts) {
       }
 
       console.log(board);
-      document.getElementById(board_props.BOARD_COMPONENT).innerHTML = board;
+      document.getElementById(board_consts.BOARD_COMPONENT).innerHTML = board;
    }
 });

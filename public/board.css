@@ -3,14 +3,6 @@
    height: 35px;
 }
 
-.board_tile:nth-child(odd) {
-   background-color: black;
-}
-
-.board_tile:nth-child(even) {
-   background-color: green;
-}
-
 .red {
    background-color: red;
 }
