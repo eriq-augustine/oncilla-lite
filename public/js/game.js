@@ -36,6 +36,7 @@ define(['underscore', 'board', 'render_board'], function(_, Board, render) {
 
          console.log(json);
          if (json.type == "init_board") {
+            console.log('trying to render...');
             this.board.setMap(json.board);
             this.render();
          }
@@ -46,6 +47,7 @@ define(['underscore', 'board', 'render_board'], function(_, Board, render) {
       },
 
       render: function() {
+         console.log('rendering...');
          render({
             cols: this.board.cols,
             rows: this.board.rows,

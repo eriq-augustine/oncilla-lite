@@ -8,21 +8,22 @@ define(['board_constants'], function(board_consts) {
 
          for (var dim_y = 0; dim_y < board_props.cols; dim_y++) {
             var y_pos = dim_y * board_consts.TILE_DIM;
-            var tile_component = '<div></div>';
             var tile_class = board_consts.TILE_CLASS + ' ' +
                              board_props.map[dim_x][dim_y];
 
             tile_id += dim_y;
 
-            tile_component.setAttribute('class', tile_class);
-            tile_component.setAttribute('id', tile_id);
-
-            tile_component.style.position = 'absolute';
-            tile_component.style.top = x_pos + 'px';
-            tile_component.style.left = y_pos + 'px';
+            var tile_component = '<div class="' + tile_class +
+                                 '" id="' + tile_id +
+                                 '" style="position: absolute; top: ' +
+                                 x_pos + 'px; left: ' + y_pos + 'px;"' +
+                                 '></div>';
 
             board += tile_component;
          }
       }
+
+      console.log(board);
+      document.getElementById(board_props.BOARD_COMPONENT).innerHTML = board;
    }
 });
