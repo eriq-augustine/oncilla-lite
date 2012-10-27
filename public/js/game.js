@@ -23,7 +23,6 @@ define(['underscore'], function(_) {
 
    Game.prototype.onMessage = function(message) {
       var json = null;
-      console.log(message);
 
       try {
          json = JSON.parse(message.data);

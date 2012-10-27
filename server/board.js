@@ -1,4 +1,4 @@
-function TestBoard() {
+exports.TestBoard = function() {
    this.rows = 10;
    this.cols = 10;
    this.grid = [];
@@ -11,4 +11,4 @@ function TestBoard() {
                randomColors[Math.floor(Math.random() * randomColors.length)];
       }
    }
-}
+};
