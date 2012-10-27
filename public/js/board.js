@@ -1,4 +1,4 @@
-define(['underscore', 'board_constants'], function(_, board_consts) {
+define(['underscore', 'board_constants'], function(_, boardConstants) {
    var Board;
 
    Board = function(kwargs) {
@@ -15,29 +15,53 @@ define(['underscore', 'board_constants'], function(_, board_consts) {
          this.map = bundle.map;
       },
       render: function() {
+         var $unit, $terrain, $tile, $board,
+             rows, cols, tile, tileClass, x, y;
+
+         $board = $('<div>');
+
+         rows = this.map.length;
+         for (var row = 0; row < rows; row++) {
+            cols = this.map[row].length;
+
+            for (var col = 0; col < cols; col++) {
+               $tile = this.renderTile(row, col);
+               $board.append($tile);
+            }
+         }
+
+         $('#' + boardConstants.BOARD_COMPONENT).append($board);
       },
-      renderTile: function(row, col) {
+
+      renderTile: function(row, col, x, y) {
+         var tile, tileClass, $terrain, $unit, x, y;
+
+         x = row * boardConstants.TILE_DIM;
+         y = col * boardConstants.TILE_DIM;
+
          tile = this.map[row][col];
-         ele = document.getElementById('tile-' + row + '-' + col);
-         ele.innerHTML = '';
+         $terrain = tile.terrain.render();
 
-         console.log("render: " + row + ", " + col);
+         if (tile.unit)
+            $unit = tile.unit.render();
 
-         if (tile.selected) {
-            ele.className = board_consts.TILE_CLASS + ' selected';
-         } else {
-            ele.className = board_consts.TILE_CLASS;
-         }
+         $tile = $('<div>')
+            .addClass(boardConstants.TILE_CLASS)
+            .attr('id', 'tile-' + row + '-' + col)
+            .css('position', 'absolute')
+            .css('top', x + 'px')
+            .css('left', y + 'px');
 
-         if (tile.unit) {
-            ele.appendChild(tile.unit.render());
-         }
+         if ($unit)
+            $tile.append($unit);
+         $tile.append($terrain);
 
-         ele.appendChild(tile.terrain.render());
+         return $tile;
       },
+
       doOnClick: function(event) {
-         var row = Math.floor(event.y / board_consts.TILE_DIM);
-         var col = Math.floor(event.x / board_consts.TILE_DIM);
+         var row = Math.floor(event.y / boardConstants.TILE_DIM);
+         var col = Math.floor(event.x / boardConstants.TILE_DIM);
 
          this.locationHighlights.forEach(function(position) {
             this.map[position.row][position.col].selected = false;
