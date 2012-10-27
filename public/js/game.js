@@ -1,4 +1,7 @@
-define(['underscore', 'board', 'render_board'], function(_, Board, render) {
+define(['underscore', 'board', 'render_board', 'object'],
+       function(_, Board, render, Object) {
+   var Unit = Terrain = Object;
+
    var port = 9090;
 
    var Game = function() {
@@ -37,7 +40,7 @@ define(['underscore', 'board', 'render_board'], function(_, Board, render) {
          console.log(json);
          if (json.type == "init_board") {
             console.log('trying to render...');
-            this.board.setMap(json.board);
+            this.board.setMap(parseBoard(json.board));
             this.render();
          }
       },
@@ -48,13 +51,30 @@ define(['underscore', 'board', 'render_board'], function(_, Board, render) {
 
       render: function() {
          console.log('rendering...');
-         render({
-            cols: this.board.cols,
-            rows: this.board.rows,
-            map: this.board.map
-         });
+         render(this.board.map);
       }
    });
+
+   function parseBoard(board) {
+      var rows, cols;
+
+      rows = board.length;
+      for (var i = 0; i < rows; i++) {
+         cols = board[i].length;
+
+         for (var j = 0; j < cols; j++) {
+            tile = board[i][j];
+
+            if (tile.unit) {
+               tile.unit = new Unit(tile.unit);
+            }
+
+            tile.terrain = new Terrain(tile.terrain);
+         }
+      }
+
+      return board;
+   }
 
    return Game;
 });
