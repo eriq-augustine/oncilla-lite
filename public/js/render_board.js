@@ -14,14 +14,12 @@ define(['board_constants'], function(board_consts) {
 
             var tileObj = board_map[dimX][dimY];
 
-            //var unitObj = undefined;
+            var unitObj = undefined;
             var terrainObj = tileObj.terrain.render();
 
-            /*
             if (tileObj.unit) {
                unitObj = tileObj.unit.render();
             }
-            */
 
             var tileClass = board_consts.TILE_CLASS;
 
@@ -31,11 +29,9 @@ define(['board_constants'], function(board_consts) {
             tileComponent.style.top = xPos + 'px';
             tileComponent.style.left = yPos + 'px';
 
-            /*
             if (unitObj) {
-               boardComponent.appendChild(unitObj);
+               tileComponent.appendChild(unitObj);
             }
-            */
 
             tileComponent.appendChild(terrainObj);
 
