@@ -1,6 +1,6 @@
-define(['underscore', 'renderable'], function(_, Renderable) {
+define(['underscore', 'mixins/renderable'], function(_, Renderable) {
    var Object = function(attributes) {
-      this.class = attributes.class || 'default';
+      this.klass = attributes.klass || 'default';
    };
 
    _.extend(Object.prototype, Renderable);

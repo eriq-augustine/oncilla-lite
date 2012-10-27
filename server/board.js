@@ -29,11 +29,11 @@ exports.SuperTestBoard = function() {
          tile = {};
          unitChance = Math.floor(Math.random() * 10);
          if (unitChance <= 1) {
-            tile.unit = { class: units[unitChance] };
+            tile.unit = { klass: units[unitChance] };
          }
 
          tile.terrain = {
-            class: terrain[Math.floor(Math.random() * terrain.length)]
+            klass: terrain[Math.floor(Math.random() * terrain.length)]
          };
 
          map[i][j] = tile;

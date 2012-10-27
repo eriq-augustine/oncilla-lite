@@ -51,7 +51,7 @@ define(['underscore', 'board', 'render_board', 'object'],
 
       render: function() {
          console.log('rendering...');
-         render(map);
+         render(this.board.map);
       }
    });
 

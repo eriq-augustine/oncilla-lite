@@ -1,7 +1,7 @@
 define({
    render: function() {
-      var class = this.class || 'default',
-          el = '<div class="unit ' + this.class + '"></div>';
+      var klass = this.klass || 'default',
+          el = '<div class="unit ' + this.klass + '"></div>';
       return document.createElement(el);
    }
 });
