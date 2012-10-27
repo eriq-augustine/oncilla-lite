@@ -11,11 +11,13 @@ define(['board_constants'], function(board_consts) {
             var tile_class = board_consts.TILE_CLASS + ' ' +
                              board_props.map[dim_x][dim_y];
 
-            tile_id += dim_y;
+            tile_id = 'tile_' + dim_x + '_' + dim_y;
 
-            var tile_component = '<div class="' + tile_class +
-                                 '" id="' + tile_id +
-                                 '" style="position: absolute; top: ' +
+            var tile_component = '<div class="' + tile_class + '" ' +
+                                 'data-x="' + dim_x + '" ' +
+                                 'data-y="' + dim_y + '" ' +
+                                 'id="' + tile_id + '" ' +
+                                 'style="position: absolute; top: ' +
                                  x_pos + 'px; left: ' + y_pos + 'px;"' +
                                  '></div>';
 
