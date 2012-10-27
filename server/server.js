@@ -9,10 +9,14 @@ var server = http.createServer(function(request, response) {
 
 server.listen(port, function() {});
 
-socketServer = new WebSocketServer({httpServer: server});
+var socketServer = new WebSocketServer({httpServer: server});
 
 socketServer.on('request', function(request) {
    var connection = request.accept(null, request.origin);
+
+   connection.on('open', function() {
+      connection.send(
+   });
 
    connection.on('error', function(error) {
       console.log("WebSocket Error: " + error);
