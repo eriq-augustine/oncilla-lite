@@ -3,22 +3,21 @@ define(['underscore'], function(_) {
 
    var Game = function() {
       this.connection = new WebSocket('ws://127.0.0.1:' + port);
-      window.connection = connection;
-
-      this.connection
-
-
+      this.connection.onopen = _.bind(this.onOpen, this);
+      this.connection.onerror = _.bind(this.onError, this);
+      this.connection.onmessage = _.bind(this.onMessage, this);
+      this.connection.onclose = _.bind(this.onClose, this);
    };
 
    Game.prototype.start = function() {
       console.log('starting a game, yeeeeehaw');
    };
 
-   Game.prototype.onopen = function() {
+   Game.prototype.onOpen = function() {
       // connection is ready
    };
 
-   Game.prototype.onerror = function(error) {
+   Game.prototype.onError = function(error) {
       console.log("JS Error: error");
    };
 
