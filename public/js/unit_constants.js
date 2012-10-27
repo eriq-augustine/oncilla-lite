@@ -2,7 +2,7 @@ define({
    berserker: {
       className: 'berserker',
       maxHealth: 75,
-      maxMavePoints: 4,
+      maxMovePoints: 4,
       weapons: [
          {
             name: 'bone knives',
