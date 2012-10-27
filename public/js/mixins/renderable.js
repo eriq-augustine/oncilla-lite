@@ -8,7 +8,7 @@ define(['jquery'], function($) {
                        '">');
 
             if (this.health) {
-               el.text = this.health;
+               el.text(this.health);
             }
 
             return el[0];
