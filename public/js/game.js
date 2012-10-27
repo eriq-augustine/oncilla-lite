@@ -40,7 +40,7 @@ define(['underscore', 'board', 'render_board', 'object'],
          console.log(json);
          if (json.type == "init_board") {
             console.log('trying to render...');
-            this.board.setMap(parseBoard(json.board));
+            this.board.setMap({ map: parseBoard(json.board)});
             this.render();
          }
       },
