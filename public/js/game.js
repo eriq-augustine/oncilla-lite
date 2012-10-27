@@ -1,8 +1,9 @@
-define(['underscore', 'constants'], function(_, constants) {
+define(['underscore', 'board', 'render_board'], function(_, Board, render) {
    var port = 9090;
 
-   console.log(constants.MY_CONSTANT);
    var Game = function() {
+      this.board = new Board();
+
       this.connection = new WebSocket('ws://127.0.0.1:' + port);
       this.connection.onopen = _.bind(this.onOpen, this);
       this.connection.onerror = _.bind(this.onError, this);
@@ -10,34 +11,48 @@ define(['underscore', 'constants'], function(_, constants) {
       this.connection.onclose = _.bind(this.onClose, this);
    };
 
-   Game.prototype.start = function() {
-      console.log('starting a game, yeeeeehaw');
-   };
+   _.extend(Game.prototype, {
+      start: function() {
+         console.log('starting a game, yeeeeehaw');
+      },
 
-   Game.prototype.onOpen = function() {
-      // connection is ready
-   };
+      onOpen: function() {
+         // connection is ready
+      },
 
-   Game.prototype.onError = function(error) {
-      console.log("JS Error: error");
-   };
+      onError: function(error) {
+         console.log("JS Error: error");
+      },
 
-   Game.prototype.onMessage = function(message) {
-      var json = null;
+      onMessage: function(message) {
+         var json = null;
 
-      try {
-         json = JSON.parse(message.data);
-      } catch (e) {
-         console.log('Failed to parse JSON: ', message.data);
-         return;
+         try {
+            json = JSON.parse(message.data);
+         } catch (e) {
+            console.log('Failed to parse JSON: ', message.data);
+            return;
+         }
+
+         console.log(json);
+         if (json.type == "init_board") {
+            this.board.setMap(json.board);
+            this.render();
+         }
+      },
+
+      onClose: function() {
+         console.log('Socket is closing.');
+      },
+
+      render: function() {
+         render({
+            cols: this.board.cols,
+            rows: this.board.rows,
+            map: this.board.map
+         });
       }
-
-      console.log(json);
-   };
-
-   Game.prototype.onClose = function() {
-      console.log('Socket is closing.');
-   };
+   });
 
    return Game;
 });
