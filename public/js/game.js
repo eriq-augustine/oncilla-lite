@@ -1,6 +1,5 @@
-define(['underscore', 'board', 'render_board', 'object'],
-       function(_, Board, render, Object) {
-   var Unit = Terrain = Object;
+define(['underscore', 'board', 'render_board', 'unit', 'terrain'],
+       function(_, Board, render, Unit, Terrain) {
 
    var port = 9090;
 

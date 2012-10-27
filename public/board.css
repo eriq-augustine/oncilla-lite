@@ -14,3 +14,32 @@
 .green {
    background-color: green;
 }
+
+.terrain {
+   width: 35px;
+   height: 35px;
+   z-index: 0;
+}
+
+.unit {
+   float: left;
+   width: 35px;
+   height: 35px;
+   z-index: 1;
+}
+
+.mountains {
+   background-image: url(../assets/terrain/Mountains.gif);
+}
+
+.grass {
+   background-image: url(../assets/terrain/Woods.gif);
+}
+
+.berserker {
+   background-image: url(../assets/units/Berserker.gif);
+}
+
+.terror-bird {
+   background-image: url(../assets/units/Terrorbird.gif);
+}
