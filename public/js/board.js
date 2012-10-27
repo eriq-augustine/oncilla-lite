@@ -18,15 +18,27 @@ define(['underscore'], function(_) {
          });
 
          if (selectedUnit) {
-            // TODO(eriq): Move and attack
+            if (map[row][col].unit) {
+               // TODO(eriq): Attack
+            } else {
+               if (Math.abs(row - selectedUnit.row) + Math.abs(col - selectedUnit.col) <= selectedUnit.unit.movePoints) {
+                  map[row][col].unit = selectedUnit.unit;
+                  map[row][col].render();
+
+                  map[selectedUnit.row][selectedUnit.col].unit = null;
+                  map[selectedUnit.row][selectedUnit.col].render();
+               }
+            }
+
+            selectedUnit = null;
          } else {
             if (map[row][col].unit) {
-               locationHighlights = findReachableLocations(row, col, map[row][col]);
+               locationHighlights = findReachableLocations(row, col, map, map[row][col].unit.movePoints);
                locationHigilights.forEach(function(position) {
                   position.selected = true;
                   position.render(row, col);
                });
-               selectedUnit = map[row][col].unit;
+               selectedUnit = {row: row, col: col, unit: map[row][col].unit};
             }
          }
       };
