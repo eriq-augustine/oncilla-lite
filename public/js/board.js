@@ -80,30 +80,64 @@ define(['underscore', 'board_constants'], function(_, boardConstants) {
             this.renderTile(position.row, position.col);
          }, this);
 
-         if (this.selectedUnit) {
-            if (this.map[row][col].unit) {
-               // TODO(eriq): Attack
-            } else {
-               if (Math.abs(row - this.selectedUnit.row) + Math.abs(col - this.selectedUnit.col) <= this.selectedUnit.unit.movePoints) {
-                  this.map[row][col].unit = this.selectedUnit.unit;
-                  this.renderTile(row, col);
+         var tile = this.map[row][col];
 
-                  this.map[this.selectedUnit.row][this.selectedUnit.col].unit = null;
-                  this.renderTile(this.selectedUnit.row, this.selectedUnit.col);
-               }
-            }
-
-            this.selectedUnit = null;
+         if (tile.unit) {
+            this.unitClicked(tile, row, col);
          } else {
-            if (this.map[row][col].unit) {
-               this.locationHighlights = findReachableLocations(row, col, this.map, this.map[row][col].unit.movePoints);
-               this.locationHighlights.forEach(function(position) {
-                  this.map[position.row][position.col].selected = true;
-                  this.renderTile(position.row, position.col);
-               }, this);
-               this.selectedUnit = {row: row, col: col, unit: this.map[row][col].unit};
-            }
+            this.terrainClicked(tile, row, col);
          }
+      },
+
+      unitClicked: function(tile, row, col) {
+         if (this.selectedUnit) {
+            // TODO attack
+            this.selectedUnit = null;
+            this.clearLocationHighlights();
+
+            this.selectUnit(tile, row, col);
+         } else {
+            this.selectUnit(tile, row, col);
+         }
+      },
+
+      terrainClicked: function(tile, row, col) {
+         if (this.selectedUnit) {
+            this.moveUnit(tile, row, col);
+            this.selectedUnit = null;
+         }
+
+         this.clearLocationHighlights();
+      },
+
+      selectUnit: function(tile, row, col) {
+         this.setLocationHighlights(tile, row, col);
+         this.selectedUnit = {row: row, col: col, unit: tile.unit};
+      },
+
+      moveUnit: function(tile, row, col) {
+         if (Math.abs(row - this.selectedUnit.row) + Math.abs(col - this.selectedUnit.col) <= this.selectedUnit.unit.movePoints) {
+            tile.unit = this.selectedUnit.unit;
+            this.renderTile(row, col);
+
+            this.map[this.selectedUnit.row][this.selectedUnit.col].unit = null;
+            this.renderTile(this.selectedUnit.row, this.selectedUnit.col);
+         }
+      },
+
+      setLocationHighlights: function(tile, row, col) {
+         this.locationHighlights = findReachableLocations(row, col, this.map, tile.unit.movePoints);
+         this.locationHighlights.forEach(function(position) {
+            this.map[position.row][position.col].selected = true;
+            this.renderTile(position.row, position.col);
+         }, this);
+      },
+
+      clearLocationHighlights: function() {
+         this.locationHighlights.forEach(function(position) {
+            this.map[position.row][position.col].selected = false;
+            this.renderTile(position.row, position.col);
+         }, this);
       }
    });
 
