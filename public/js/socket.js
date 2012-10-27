@@ -18,7 +18,7 @@ function setUpSocket() {
          json = JSON.parse(message.data);
 
          if (json.type === 'init_board') {
-            initBoard(json.rows, json.cols, josn.board);
+            initBoard(json.boad);
          }
 
       } catch (e) {

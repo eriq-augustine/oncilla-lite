@@ -4,6 +4,7 @@ var connect = require('connect');
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 var fs = require('fs');
+require('../server/board.js');
 
 var server = connect.createServer(
    connect.static(__dirname + '/../public')
@@ -15,7 +16,8 @@ socketServer.on('request', function(request) {
    var connection = request.accept(null, request.origin);
 
    connection.on('open', function() {
-      //connection.send(
+      var message = {'type': 'init_board', 'board': new TestBoard()};
+      connection.send(JSON.strigify(message));
    });
 
    connection.on('error', function(error) {
