@@ -19,7 +19,7 @@ socketServer.on('request', function(request) {
    });
 
    connection.on('message', function(message) {
-      console.log("Got message: " + messagae);
+      console.log("Got message: " + message);
    });
 
    connection.on('close', function(connection) {
