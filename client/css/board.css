@@ -1,0 +1,113 @@
+#board-area {
+   display: inline-block;
+   width: 400px;
+   height: 400px;
+   padding: 10px;
+}
+
+.info-area {
+   display: inline-block;
+   z-index: 0;
+   width: 235px;
+   height: 380px;
+   padding: 10px;
+   vertical-align: top;
+   background: #BBB;
+   margin-top: 10px;
+}
+
+.info-area .tabs .tab {
+   display: inline-block;
+   padding: 5px;
+   z-index: 1;
+   background: #D6E7EC;
+   margin-right: 2px;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   cursor: pointer;
+}
+
+.info-area .tabs .active-tab {
+   background: lightBlue;
+   z-index: 2;
+}
+
+.info-area .infos {
+   position: relative;
+   width: 211px;
+   height: 330px;
+   margin: 0;
+   background: lightBlue;
+   padding: 10px;
+}
+
+.info-area .infos .info {
+   position: absolute;
+   z-index: 1;
+   display: none;
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.info-area .infos .active-info {
+   z-index: 2;
+   display: block;
+}
+
+.info-area .infos .info div {
+   background: #D6E7EC;
+   width: 90%;
+   margin-bottom: 10px;
+}
+
+.info-area .infos .info button {
+   margin-bottom: 10px;
+   width: 90%;
+}
+
+.tile, .tile div {
+   width: 40px;
+   height: 40px;
+   position: relative;
+}
+
+.tile {
+   display: inline-block;
+   overflow: hidden;
+}
+
+.tile div {
+   top: 0;
+   left: 0;
+   position: absolute;
+}
+
+.health-overlay p {
+   margin: 0;
+}
+
+.sprite {
+   background-attachment: fixed;
+   height: 40px;
+   width: 40px;
+}
+
+.unit.exhausted {
+   -webkit-filter: grayscale(100%);
+}
+
+.tile-overlay.selected {
+   background: yellow;
+   opacity: 0.50;
+}
+
+.terrain-overlay.move-highlight {
+   background: blue;
+   opacity: 0.50;
+}
+
+.terrain-overlay.attack-highlight {
+   background: red;
+   opacity: 0.50;
+}
