@@ -22,6 +22,8 @@ function onMessage(messageEvent) {
 
    if (data.type && data.type == 'init_game') {
       oncilla.game = game.deserialize(data.game);
+      util.initGameUI();
+      util.loadInfoArea();
       oncilla.game.board.draw(document.getElementById('board-area'));
 
       // Add the sway.
@@ -39,7 +41,7 @@ function onMessage(messageEvent) {
 
 function onClose(messageEvent) {
    //console.log("Connection to server closed: " + JSON.stringify(messageEvent));
-   console.log("Connection to server closed.");
+   util.fatalError("Connection to server closed.");
 }
 
 function onOpen(messageEvent) {

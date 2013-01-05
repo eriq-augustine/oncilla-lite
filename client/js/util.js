@@ -1,5 +1,26 @@
 'use strict';
 
+util.initGameUI = function() {
+   document.getElementById('content').innerHTML =
+      "<div id='board-area'></div>" +
+      "<div class='info-area'>" +
+         "<div class='tabs'></div>" +
+         "<div class='infos'></div>" +
+      "</div>";
+};
+
+// TODO(eriq): Perhaps make these (this and fatal error) modals instead of changing #content.
+util.initLoadingUI = function(message) {
+   document.getElementById('content').innerHTML =
+      '<div class="loading"><img src="assets/images/loading.gif" /><p>' + message + '</p></div>';
+};
+
+util.fatalError = function(message) {
+   console.log('Fatal Error: ' + message);
+   document.getElementById('content').innerHTML =
+      '<div class="error fatal-error"><p>' + message + '</p></div>';
+};
+
 util.loadInfoArea = function() {
    var mainInfoTab = util.createInfoTab('main', 'Main', true, true) +
                      util.createInfoTab('map', 'Map', true);

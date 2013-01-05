@@ -1,7 +1,6 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function() {
-   util.loadInfoArea();
-
+   util.initLoadingUI('Waiting for player');
    loadSocket();
 });
