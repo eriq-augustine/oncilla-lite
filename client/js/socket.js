@@ -1,7 +1,7 @@
 function loadSocket() {
-   //var ws = new WebSocket("ws://localhost:9090");
+   var ws = new WebSocket("ws://localhost:9090");
    //var ws = new WebSocket("ws://76.126.186.239:9090");
-   var ws = new WebSocket("ws://76.126.186.239:9090");
+   //var ws = new WebSocket("ws://24.176.224.131:9090");
 
    ws.onmessage = onMessage;
    ws.onclose = onClose;
