@@ -9,18 +9,17 @@ var player = require('./../../shared/js/player.js').player;
 // not the shared one.
 exports.game = game;
 
-game.startGame = function(gameId, socket, connectionId) {
+game.startGame = function(gameId, conn1, conn2) {
    // TODO(eriq): Load these
    // TODO(eriq): Make these server players and pass their connections.
-   var player1 = new player.Player(0, 'advance-wars', 'red');
-   var player2 = new player.Player(1, 'circus', 'blue');
+   var player1 = new player.Player(0, 'advance-wars', 'red', conn1);
+   var player2 = new player.Player(1, 'circus', 'blue', conn2);
 
    // TODO(eriq): Grab types from the serialized game.
    var newgame = new game.ServerGame(gameId, 0,
                                      player1, player2,
                                      util.stockUnitTypes, util.stockTerrainTypes,
-                                     null,
-                                     socket, connectionId);
+                                     null);
 
    // TODO(eriq): Load board, don't randomize.
    newgame.board.randomize(10, 10);
@@ -29,7 +28,8 @@ game.startGame = function(gameId, socket, connectionId) {
    var message = {type: 'init_game',
                   game: newgame.serialize()};
 
-   socket.send(JSON.stringify(message));
+   conn1.send(JSON.stringify(message));
+   conn2.send(JSON.stringify(message));
 
    return game;
 };
@@ -37,12 +37,8 @@ game.startGame = function(gameId, socket, connectionId) {
 game.ServerGame = function(id, turn,
                            player1, player2,
                            unitTypes, terrainTypes,
-                           boardData,
-                           player1Socket, player1ConnectionId) {
+                           boardData) {
    game.Game.call(this, id, turn, player1, player2, unitTypes, terrainTypes, boardData);
-
-   this.plater1Socket = player1Socket;
-   this.plater1ConnectionId = player1ConnectionId;
 };
 game.ServerGame.prototype = new game.Game();
 game.ServerGame.prototype.constructor = game.ServerGame;
