@@ -95,7 +95,7 @@ board.ClientBoard.prototype.tileClicked = function(row, col) {
       }
 
       if (validMove) {
-         serverValidateMove(this.selection, this.board[row][col]);
+         socket.serverValidateMove(this.selection, this.board[row][col]);
       }
 
       this.state = board.BOARD_STATE.NORMAL;
@@ -114,7 +114,7 @@ board.ClientBoard.prototype.tileClicked = function(row, col) {
       }, this);
 
       if (validAttack) {
-         serverValidateAttack(this.selection, this.board[row][col]);
+         socket.serverValidateAttack(this.selection, this.board[row][col]);
       }
 
       this.state = board.BOARD_STATE.NORMAL;
@@ -129,6 +129,11 @@ board.ClientBoard.prototype.attackUnit = function(playerTile, enemyTile) {
    //TODO(eriq): Only update affected tiles, not hole board.
    board.Board.prototype.attackUnit.call(this, playerTile, enemyTile);
    this.update(document.getElementById('board-area'));
+
+   // TODO(eriq): This should be more controlled/centralized.
+   oncilla.game.moveset.push({type: 'attack',
+                              playerTile: {row: playerTile.row, col: playerTile.col},
+                              enemyTile: {row: enemyTile.row, col: enemyTile.col}});
 };
 
 // TODO(eriq): Sweet Animation
@@ -136,6 +141,11 @@ board.ClientBoard.prototype.moveUnit = function(startTile, endTile) {
    //TODO(eriq): Only update affected tiles, not hole board.
    board.Board.prototype.moveUnit.call(this, startTile, endTile);
    this.update(document.getElementById('board-area'));
+
+   // TODO(eriq): This should be more controlled/centralized.
+   oncilla.game.moveset.push({type: 'move',
+                              start: {row: startTile.row, col: startTile.col},
+                              end: {row: endTile.row, col: endTile.col}});
 };
 
 board.ClientBoard.prototype.draw = function(container) {

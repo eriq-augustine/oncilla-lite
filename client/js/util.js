@@ -29,7 +29,7 @@ util.loadInfoArea = function() {
                        '<div>CO Power</div>' +
                        '<div>Units Alive</div>' +
                        '<div>Game Clock</div>' +
-                       '<button onclick="endTurn();">End Turn</button>' +
+                       '<button onclick="oncilla.game.endTurn();">End Turn</button>' +
                       '</div>' +
                       '<div id="info-map" class="info core-info">' +
                        '<div>Map Name</div>' +

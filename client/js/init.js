@@ -14,3 +14,9 @@ var oncilla = {};
 function require(path, namespace) {
    return {};
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+   util.initLoadingUI('Waiting for player');
+   socket.loadSocket();
+});
+

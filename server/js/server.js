@@ -2,28 +2,40 @@
 
 var util = require('./../../shared/js/util.js').util;
 var game = require('./../../server/js/game.js').game;
-var connection = require('./../../server/js/connection.js').connection;
+
+var server = {};
+exports.server = server;
 
 var WebSocketServer = require('ws').Server;
-var serverInstance = new WebSocketServer({port: 9090});
+server.serverInstance = new WebSocketServer({port: 9090});
 
-var gameId = 0;
-var games = {};
+// TODO(eriq): Should be in namespace.
+// TODO(eriq): These should be managed more closely and exposed only vio api.
+server.gameId = 0;
+server.games = {};
+server.gamesByConnection = {};
 
 // TODO(eriq): For now, just have a single pending game at a time
-var pendingConnection = null;
+server.pendingConnection = null;
 
-serverInstance.on('connection', function(socket) {
+// HACK(eriq): This is to counter a circular dependency between connection.js and server.js.
+var connection = require('./../../server/js/connection.js').connection;
+
+server.serverInstance.on('connection', function(socket) {
    var conn = new connection.Connection(socket);
 
    //TEST
    console.log("Connection [%d] established", conn.id);
 
-   if (pendingConnection) {
-      games[gameId] = game.startGame(gameId, pendingConnection, conn);
-      gameId++;
-      pendingConnection = null;
+   if (server.pendingConnection) {
+      var newgame = game.startGame(server.gameId, server.pendingConnection, conn);
+
+      server.games[server.gameId++] = newgame;
+      server.gamesByConnection[server.pendingConnection.id] = newgame;
+      server.gamesByConnection[conn.id] = newgame;
+
+      server.pendingConnection = null;
    } else {
-      pendingConnection = conn;
+      server.pendingConnection = conn;
    }
 });

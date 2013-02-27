@@ -18,6 +18,11 @@ game.Game = function(id, turn,
                      player1, player2,
                      unitTypes, terrainTypes,
                      boardData) {
+   // HACK(eriq): Get out early for prototyical inheritance.
+   if (id === undefined) {
+      return;
+   }
+
    this.id = id;
    this.turn = turn;
 
@@ -65,7 +70,7 @@ game.Game.prototype.serialize = function() {
 // TODO(eriq): Probably just redraw the entire board.
 // TODO(eriq): This will have to be a little more complex to abstract to more than two players.
 // TODO(eriq): Monies?
-game.Game.endTurn = function() {
+game.Game.prototype.endTurn = function(blindPass) {
    // TODO(eriq): Maintain some structures that organize units.
    this.board.board.forEach(function(row) {
       row.forEach(function(tile) {
@@ -73,5 +78,9 @@ game.Game.endTurn = function() {
       });
    });
 
+   this.nextTurn(blindPass);
+};
+
+game.Game.prototype.nextTurn = function(blindPass) {
    this.turn = (this.turn + 1) % 2;
 };

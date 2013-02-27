@@ -12,5 +12,5 @@ player.ServerPlayer = function(id, army, color, conn) {
 
    this.conn = conn;
 };
-player.serverPlayer.prototype = new player.Player();
-player.serverPlayer.prototype.constructor = player.ServerPlayer;
+player.ServerPlayer.prototype = new player.Player();
+player.ServerPlayer.prototype.constructor = player.ServerPlayer;
